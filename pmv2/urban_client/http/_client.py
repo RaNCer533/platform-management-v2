@@ -58,7 +58,7 @@ class HTTPUrbanClient(UrbanClient):
         """Check if Urban API instance is responding."""
         async with self._get_session() as session:
             try:
-                resp = await session.get("/health_check/ping", timeout=10)
+                resp = await session.get("/health_check/ping", timeout=1000)
             except ClientConnectionError as exc:
                 await self._logger.awarning("error on ping", error=repr(exc))
                 return False
@@ -306,4 +306,4 @@ class HTTPUrbanClient(UrbanClient):
         return result
 
     def _get_session(self) -> ClientSession:
-        return ClientSession(self._host, timeout=ClientTimeout(20))
+        return ClientSession(self._host, timeout=ClientTimeout(2000))
